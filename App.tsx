@@ -1,20 +1,23 @@
+import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { ErrorBoundary } from './src/shared/components/ErrorBoundary';
+import { AuthProvider } from './src/features/auth/AuthContext';
+import { RootNavigator } from './src/navigation/RootNavigator';
 
+/**
+ * Main App component
+ * Wraps the app with ErrorBoundary and AuthProvider
+ * ErrorBoundary catches any unhandled errors and prevents crashes
+ * AuthProvider manages auth state globally
+ * RootNavigator handles auth gating and navigation
+ */
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <ErrorBoundary>
+      <AuthProvider>
+        <RootNavigator />
+        <StatusBar style="auto" />
+      </AuthProvider>
+    </ErrorBoundary>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
